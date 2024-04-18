@@ -74,19 +74,6 @@ class HotelManager:
             raise HotelManagementException("Numdays should be in the range 1-10")
         return num_days
 
-
-    @staticmethod
-    def validate_dni( d ):
-        """RETURN TRUE IF THE DNI IS RIGHT, OR FALSE IN OTHER CASE"""
-        c = {"0": "T", "1": "R", "2": "W", "3": "A", "4": "G", "5": "M",
-             "6": "Y", "7": "F", "8": "P", "9": "D", "10": "X", "11": "B",
-             "12": "N", "13": "J", "14": "Z", "15": "S", "16": "Q", "17": "V",
-             "18": "H", "19": "L", "20": "C", "21": "K", "22": "E"}
-        v = int(d[ 0:8 ])
-        r = str(v % 23)
-        return d[8] == c[r]
-
-
     def validate_localizer(self, l):
         """validates the localizer format using a regex"""
         r = r'^[a-fA-F0-9]{32}$'
@@ -140,8 +127,6 @@ class HotelManager:
                          num_days:int)->str:
         """manges the hotel reservation: creates a reservation and saves it into a json file"""
 
-        #self.validate_id_card(id_card)
-
         room_type = self.validate_room_type(room_type)
 
         self.validate_name_surname(name_surname)
@@ -194,14 +179,6 @@ class HotelManager:
         if not regex_matches:
             raise HotelManagementException("Invalid name format")
 
-    def validate_id_card(self, id_card):
-        r = r'^[0-9]{8}[A-Z]{1}$'
-        my_regex = re.compile(r)
-        if not my_regex.fullmatch(id_card):
-            raise HotelManagementException("Invalid IdCard format")
-        if not self.validate_dni(id_card):
-            raise HotelManagementException("Invalid IdCard letter")
-
     def guest_arrival(self, file_input:str)->str:
         """manages the arrival of a guest with a reservation"""
         try:
@@ -219,7 +196,7 @@ class HotelManager:
         except KeyError as e:
             raise HotelManagementException("Error - Invalid Key in JSON") from e
 
-        self.validate_id_card(my_id_card)
+        #self.validate_id_card(my_id_card)
 
         self.validate_localizer(my_localizer)
         # self.validate_localizer() hay que validar

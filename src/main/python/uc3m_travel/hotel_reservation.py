@@ -2,7 +2,7 @@
 import hashlib
 from datetime import datetime
 from .attributes.attribute_idcard import IdCard
-
+from .attributes.attribute_creditcard import CreditCard
 class HotelReservation:
     """Class for representing hotel reservations"""
     #pylint: disable=too-many-arguments, too-many-instance-attributes
@@ -15,7 +15,7 @@ class HotelReservation:
                  arrival:str,
                  num_days:int):
         """constructor of reservation objects"""
-        self.__credit_card_number = credit_card_number
+        self.__credit_card_number = CreditCard(credit_card_number).value
         self.__id_card = IdCard(id_card).value
         justnow = datetime.utcnow()
         self.__arrival = arrival
