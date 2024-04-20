@@ -14,7 +14,7 @@ class HotelManager:
     def __init__(self):
         pass
 
-    def validatecreditcard( self, x ):
+    '''def validatecreditcard( self, x ):
         """validates the credit card number using luhn altorithm"""
         #taken form
         # https://allwin-raju-12.medium.com/
@@ -88,7 +88,7 @@ class HotelManager:
         myregex = re.compile(r)
         if not myregex.fullmatch(l):
             raise HotelManagementException("Invalid room key format")
-        return l
+        return l'''
 
     def read_data_from_json(self, fi):
         """reads the content of a json file with two fields: CreditCard and phoneNumber"""
@@ -111,8 +111,8 @@ class HotelManager:
                                    arrival="20/01/2024")
         except KeyError as e:
             raise HotelManagementException("JSON Decode Error - Invalid JSON Key") from e
-        if not self.validatecreditcard(c):
-            raise HotelManagementException("Invalid credit card number")
+        #if not self.validatecreditcard(c):
+            #raise HotelManagementException("Invalid credit card number")
         # Close the file
         return req
 
@@ -127,13 +127,13 @@ class HotelManager:
                          num_days:int)->str:
         """manges the hotel reservation: creates a reservation and saves it into a json file"""
 
-        room_type = self.validate_room_type(room_type)
+        #room_type = self.validate_room_type(room_type)
 
-        self.validate_name_surname(name_surname)
-        credit_card = self.validatecreditcard(credit_card)
-        arrival_date = self.validate_arrival_date(arrival_date)
-        num_days = self.validate_numdays(num_days)
-        phone_number = self.validate_phonenumber(phone_number)
+        #self.validate_name_surname(name_surname)
+        #credit_card = self.validatecreditcard(credit_card)
+        #arrival_date = self.validate_arrival_date(arrival_date)
+        #num_days = self.validate_numdays(num_days)
+        #phone_number = self.validate_phonenumber(phone_number)
         my_reservation = HotelReservation(id_card=id_card,
                                           credit_card_number=credit_card,
                                           name_surname=name_surname,
@@ -172,12 +172,12 @@ class HotelManager:
 
         return my_reservation.localizer
 
-    def validate_name_surname(self, name_surname):
+    '''def validate_name_surname(self, name_surname):
         r = r"^(?=^.{10,50}$)([a-zA-Z]+(\s[a-zA-Z]+)+)$"
         myregex = re.compile(r)
         regex_matches = myregex.fullmatch(name_surname)
         if not regex_matches:
-            raise HotelManagementException("Invalid name format")
+            raise HotelManagementException("Invalid name format")'''
 
     def guest_arrival(self, file_input:str)->str:
         """manages the arrival of a guest with a reservation"""
@@ -198,7 +198,7 @@ class HotelManager:
 
         #self.validate_id_card(my_id_card)
 
-        self.validate_localizer(my_localizer)
+        #self.validate_localizer(my_localizer)
         # self.validate_localizer() hay que validar
 
         #buscar en almacen

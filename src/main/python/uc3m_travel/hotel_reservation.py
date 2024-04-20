@@ -3,6 +3,13 @@ import hashlib
 from datetime import datetime
 from .attributes.attribute_idcard import IdCard
 from .attributes.attribute_creditcard import CreditCard
+from .attributes.attribute_room_type import RoomType
+from .attributes.attribute_arrival_date import ArrivalDate
+from .attributes.attribute_phonenumber import PhoneNumber
+from .attributes.attribute_numdays import NumDays
+from .attributes.attribute_localizer import Localizer
+from .attributes.attribute_roomkey import RoomKey
+from .attributes.attribute_name_surname import NameSurname
 class HotelReservation:
     """Class for representing hotel reservations"""
     #pylint: disable=too-many-arguments, too-many-instance-attributes
@@ -18,13 +25,13 @@ class HotelReservation:
         self.__credit_card_number = CreditCard(credit_card_number).value
         self.__id_card = IdCard(id_card).value
         justnow = datetime.utcnow()
-        self.__arrival = arrival
+        self.__arrival = ArrivalDate(arrival).value
         self.__reservation_date = datetime.timestamp(justnow)
-        self.__name_surname = name_surname
-        self.__phone_number = phone_number
-        self.__room_type = room_type
-        self.__num_days = num_days
-        self.__localizer =  hashlib.md5(str(self).encode()).hexdigest()
+        self.__name_surname = NameSurname(name_surname).value
+        self.__phone_number = PhoneNumber(phone_number).value
+        self.__room_type = RoomType(room_type).value
+        self.__num_days = NumDays(num_days).value
+        self.__localizer = Localizer(hashlib.md5(str(self).encode()).hexdigest()).value
 
     def __str__(self):
         """return a json string with the elements required to calculate the localizer"""
