@@ -10,8 +10,8 @@ class NumDays(Attribute):
         #super()._validate(num_days)
         try:
             days = int(num_days)
-        except ValueError as ex:
-            raise HotelManagementException("Invalid num_days datatype") from ex
+        except ValueError as exception:
+            raise HotelManagementException("Invalid num_days datatype") from exception
         if (days < 1 or days > 10):
             raise HotelManagementException("Numdays should be in the range 1-10")
         return num_days

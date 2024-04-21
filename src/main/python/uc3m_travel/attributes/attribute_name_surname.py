@@ -5,9 +5,3 @@ class NameSurname(Attribute):
         self._validation_pattern = r"^(?=^.{10,50}$)([a-zA-Z]+(\s[a-zA-Z]+)+)$"
         self._error_message = "Invalid name format"
         self._attr_value = self._validate(name_surname)
-
-    def _validate(self, name_surname):
-        super()._validate(name_surname)
-        if not name_surname:
-            raise HotelManagementException("Invalid name format")
-        return name_surname

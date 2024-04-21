@@ -8,8 +8,8 @@ class CreditCard(Attribute):
 
     def _validate(self, credit_card):
         super()._validate(credit_card)
-        def digits_of(n):
-            return [int(d) for d in str(n)]
+        def digits_of(number):
+            return [int(digits) for digits in str(number)]
 
 
         digits = digits_of(credit_card)
@@ -17,8 +17,8 @@ class CreditCard(Attribute):
         even_digits = digits[-2::-2]
         checksum = 0
         checksum += sum(odd_digits)
-        for d in even_digits:
-            checksum += sum(digits_of(d * 2))
+        for digit in even_digits:
+            checksum += sum(digits_of(digit * 2))
         if not checksum % 10 == 0:
             raise HotelManagementException("Invalid credit card number (not luhn)")
         return credit_card

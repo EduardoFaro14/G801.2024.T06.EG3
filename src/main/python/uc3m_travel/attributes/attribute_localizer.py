@@ -5,9 +5,3 @@ class Localizer(Attribute):
         self._validation_pattern = r'^[a-fA-F0-9]{32}$'
         self._error_message = "Invalid localizer"
         self._attr_value = self._validate(localizer)
-
-    def _validate(self, localizer):
-        super()._validate(localizer)
-        if not localizer:
-            raise HotelManagementException("Invalid localizer")
-        return localizer

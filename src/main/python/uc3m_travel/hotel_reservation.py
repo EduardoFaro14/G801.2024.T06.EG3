@@ -7,7 +7,6 @@ from .attributes.attribute_room_type import RoomType
 from .attributes.attribute_arrival_date import ArrivalDate
 from .attributes.attribute_phonenumber import PhoneNumber
 from .attributes.attribute_numdays import NumDays
-from .attributes.attribute_localizer import Localizer
 from .attributes.attribute_roomkey import RoomKey
 from .attributes.attribute_name_surname import NameSurname
 class HotelReservation:
@@ -31,7 +30,7 @@ class HotelReservation:
         self.__phone_number = PhoneNumber(phone_number).value
         self.__room_type = RoomType(room_type).value
         self.__num_days = NumDays(num_days).value
-        self.__localizer = Localizer(hashlib.md5(str(self).encode()).hexdigest()).value
+        self.__localizer = hashlib.md5(str(self).encode()).hexdigest()
 
     def __str__(self):
         """return a json string with the elements required to calculate the localizer"""
