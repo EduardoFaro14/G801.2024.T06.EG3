@@ -9,6 +9,7 @@ from uc3m_travel.hotel_management_config import JSON_FILES_PATH
 from freezegun import freeze_time
 from .attributes.attribute_localizer import Localizer
 from .attributes.attribute_idcard import IdCard
+from .storage.json_store import JsonStore
 
 
 class HotelManager:
@@ -144,7 +145,7 @@ class HotelManager:
                                           arrival=arrival_date,
                                           num_days=num_days)
 
-        # escribo el fichero Json con todos los datos
+        '''# escribo el fichero Json con todos los datos
         file_store = JSON_FILES_PATH + "store_reservation.json"
 
         #leo los datos del fichero si existe , y si no existe creo una lista vacia
@@ -170,7 +171,9 @@ class HotelManager:
             with open(file_store, "w", encoding="utf-8", newline="") as file:
                 json.dump(data_list, file, indent=2)
         except FileNotFoundError as exception:
-            raise HotelManagementException("Wrong file  or file path") from exception
+            raise HotelManagementException("Wrong file  or file path") from exception'''
+        reservation_store = JsonStore()
+        reservation_store.save_reservation(my_reservation)
 
         return my_reservation.localizer
 
