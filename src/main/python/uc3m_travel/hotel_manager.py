@@ -261,7 +261,10 @@ class HotelManager:
                                localizer=my_localizer, roomtype=reservation_room_type)
 
         #Ahora lo guardo en el almacen nuevo de checkin
-        # escribo el fichero Json con todos los datos
+        reservation_store = JsonStore()
+        reservation_store.save_checkin(my_checkin)
+
+        '''# escribo el fichero Json con todos los datos
         file_store = JSON_FILES_PATH + "store_check_in.json"
 
         # leo los datos del fichero si existe , y si no existe creo una lista vacia
@@ -285,7 +288,7 @@ class HotelManager:
             with open(file_store, "w", encoding="utf-8", newline="") as file:
                 json.dump(room_key_list, file, indent=2)
         except FileNotFoundError as exception:
-            raise HotelManagementException("Wrong file  or file path") from exception
+            raise HotelManagementException("Wrong file  or file path") from exception'''
 
         return my_checkin.room_key
 

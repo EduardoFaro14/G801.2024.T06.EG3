@@ -1,8 +1,9 @@
 import re
 import json
-from .. import JSON_FILES_PATH
+from uc3m_travel.hotel_management_config import JSON_FILES_PATH
 from ..hotel_management_exception import HotelManagementException
 from ..hotel_reservation import HotelReservation
+from ..hotel_manager import HotelStay
 
 class JsonStore():
     def __init__(self):
@@ -35,5 +36,32 @@ class JsonStore():
         try:
             with open(file_store, "w", encoding="utf-8", newline="") as file:
                 json.dump(data_list, file, indent=2)
+        except FileNotFoundError as exception:
+            raise HotelManagementException("Wrong file  or file path") from exception
+
+    def save_checkin(self, my_checkin: HotelStay):
+        # escribo el fichero Json con todos los datos
+        file_store = JSON_FILES_PATH + "store_check_in.json"
+
+        # leo los datos del fichero si existe , y si no existe creo una lista vacia
+        try:
+            with open(file_store, "r", encoding="utf-8", newline="") as file:
+                room_key_list = json.load(file)
+        except FileNotFoundError as exception:
+            room_key_list = []
+        except json.JSONDecodeError as exception:
+            raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from exception
+
+        # comprobar que no he hecho otro ckeckin antes
+        for item in room_key_list:
+            if my_checkin.room_key == item["_HotelStay__room_key"]:
+                raise HotelManagementException("ckeckin  ya realizado")
+
+        # añado los datos de mi reserva a la lista , a lo que hubiera
+        room_key_list.append(my_checkin.__dict__)
+
+        try:
+            with open(file_store, "w", encoding="utf-8", newline="") as file:
+                json.dump(room_key_list, file, indent=2)
         except FileNotFoundError as exception:
             raise HotelManagementException("Wrong file  or file path") from exception
