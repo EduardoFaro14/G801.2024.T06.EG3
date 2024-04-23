@@ -6,10 +6,43 @@ from ..hotel_reservation import HotelReservation
 from ..hotel_manager import HotelStay
 
 class JsonStore():
+
+    """_data_list = []
+    _file_name = ""
+    """
+
     def __init__(self):
         self._validation_pattern = r""
         self._error_message = ""
         self._attr_value = ""
+
+    """
+    def save_list_to_file(self):
+    
+    def load_list_from_file(self):
+    
+    def add_item(slf, item):
+    
+    def find_item(self, key, value):
+        self.load_list_from_file()
+        for item in self._data_list:
+            if item[key] == value:
+                return item
+        return None
+    
+    
+    
+    @property
+    def hash(self):
+        self.load_store()
+        return hashlib.md5(self.__str__().encode()).hexdigest()
+    
+    
+    def save_reservation(self, my_reservation):
+        file_store = JSON_FILES_PATH + "store_reservation.json"
+    """
+
+
 
     def save_reservation(self, reservation_data: HotelReservation):
         file_store = JSON_FILES_PATH + "store_reservation.json"
