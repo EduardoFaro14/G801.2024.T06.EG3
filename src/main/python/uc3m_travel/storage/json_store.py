@@ -1,9 +1,6 @@
-import re
 import json
-from uc3m_travel.hotel_management_config import JSON_FILES_PATH
 from ..hotel_management_exception import HotelManagementException
-from ..hotel_reservation import HotelReservation
-from ..hotel_manager import HotelStay
+
 
 class JsonStore():
 

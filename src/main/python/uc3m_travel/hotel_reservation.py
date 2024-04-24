@@ -12,7 +12,7 @@ from .attributes.attribute_phonenumber import PhoneNumber
 from .attributes.attribute_numdays import NumDays
 from .attributes.attribute_roomkey import RoomKey
 from .attributes.attribute_name_surname import NameSurname
-from hotel_management_exception import HotelManagementException
+from .hotel_management_exception import HotelManagementException
 from .storage.reservation_json_store import ReservationJsonStore
 class HotelReservation:
     """Class for representing hotel reservations"""

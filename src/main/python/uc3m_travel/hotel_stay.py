@@ -2,7 +2,7 @@
 from datetime import datetime
 import hashlib
 from .attributes.attribute_localizer import Localizer
-from hotel_management_exception import HotelManagementException
+from .hotel_management_exception import HotelManagementException
 
 class HotelStay():
     """Class for representing hotel stays"""

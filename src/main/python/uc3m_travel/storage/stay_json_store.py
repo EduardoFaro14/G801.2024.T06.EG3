@@ -4,6 +4,7 @@ from .json_store import JsonStore
 class StayJsonStore(JsonStore):
     class __StayJsonStore(JsonStore):
         _file_name = JSON_FILES_PATH + "store_check_in.json"
+        _file_name2 = JSON_FILES_PATH + "store_reservation.json"
         _error_message_store_not_found = "Error: file input not found"
         _error_message_find = "ckeckin  ya realizado"
 
