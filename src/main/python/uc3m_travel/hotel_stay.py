@@ -1,8 +1,11 @@
 ''' Class HotelStay (GE2.2) '''
 from datetime import datetime
 import hashlib
+
+from . import HotelReservation
 from .attributes.attribute_localizer import Localizer
 from .hotel_management_exception import HotelManagementException
+
 
 class HotelStay():
     """Class for representing hotel stays"""
