@@ -53,3 +53,9 @@ class JsonStore():
         except json.JSONDecodeError as exception:
             raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from exception
         return self._data_list
+
+    def save_checkin(self, checkin_data):
+        pass
+
+    def save_checkout(self, checkout_data):
+        pass
