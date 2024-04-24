@@ -81,3 +81,24 @@ class HotelStay():
         my_checkin = HotelStay(idcard=my_id_card, numdays=int(new_reservation.num_days),
                                localizer=my_localizer, roomtype=new_reservation.room_type)
         return my_checkin
+
+    @classmethod
+    def read_input_data_from_file(self, input_list):
+        # comprobar valores del fichero
+        try:
+            my_localizer = Localizer(input_list["Localizer"]).value
+            my_id_card = IdCard(input_list["IdCard"]).value
+        except KeyError as exception:
+            raise HotelManagementException("Error - Invalid Key in JSON") from exception
+        return my_id_card, my_localizer
+
+    @classmethod
+    def read_input_file(self, file_input):
+        try:
+            with open(file_input, "r", encoding="utf-8", newline="") as file:
+                input_list = json.load(file)
+        except FileNotFoundError as exception:
+            raise HotelManagementException("Error: file input not found") from exception
+        except json.JSONDecodeError as exception:
+            raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from exception
+        return input_list

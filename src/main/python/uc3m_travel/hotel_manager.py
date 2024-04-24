@@ -105,45 +105,6 @@ class HotelManager:
 
             return my_checkin.room_key
 
-        def find_reservation(self, my_localizer, store_list):
-            found = False
-            for item in store_list:
-                if my_localizer == item["_HotelReservation__localizer"]:
-                    return item
-            raise HotelManagementException("Error: localizer not found")
-
-        def read_input_data_from_file(self, input_list):
-            # comprobar valores del fichero
-            try:
-                my_localizer = Localizer(input_list["Localizer"]).value
-                my_id_card = IdCard(input_list["IdCard"]).value
-            except KeyError as exception:
-                raise HotelManagementException("Error - Invalid Key in JSON") from exception
-            return my_id_card, my_localizer
-
-        def read_input_file(self, file_input):
-            try:
-                with open(file_input, "r", encoding="utf-8", newline="") as file:
-                    input_list = json.load(file)
-            except FileNotFoundError as exception:
-                raise HotelManagementException("Error: file input not found") from exception
-            except json.JSONDecodeError as exception:
-                raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from exception
-            return input_list
-
-        def load_reservations_store(self):
-            file_store = JSON_FILES_PATH + "store_reservation.json"
-            # leo los datos del fichero , si no existe deber dar error porque el almacen de reservaa
-            # debe existir para hacer el checkin
-            try:
-                with open(file_store, "r", encoding="utf-8", newline="") as file:
-                    store_list = json.load(file)
-            except FileNotFoundError as exception:
-                raise HotelManagementException("Error: store reservation not found") from exception
-            except json.JSONDecodeError as exception:
-                raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from exception
-
-            return store_list
 
         def guest_checkout(self, room_key:str)->bool:
             """manages the checkout of a guest"""
