@@ -40,6 +40,12 @@ class JsonStore():
         for item in self._data_list:
             if item[key] == value:
                 raise HotelManagementException(self._error_message_find)
+    def return_item(self, key, value):
+        self.load_list_from_file(self._file_name)
+        for item in self._data_list:
+            if item[key] == value:
+                return item
+        return None
 
     def read_store(self):
         try:

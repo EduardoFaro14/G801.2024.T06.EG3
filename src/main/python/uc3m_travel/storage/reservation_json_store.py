@@ -23,7 +23,7 @@ class ReservationJsonStore(JsonStore):
             ReservationJsonStore.__instance = ReservationJsonStore.__ReservationJsonStore()
         return ReservationJsonStore.__instance
 
-    def find_reservation(self, my_localizer, store_list):
+    '''def find_reservation(self, my_localizer, store_list):
         found = False
         for item in store_list:
             if my_localizer == item["_HotelReservation__localizer"]:
@@ -44,5 +44,5 @@ class ReservationJsonStore(JsonStore):
 
         return store_list
 
-
+'''
 

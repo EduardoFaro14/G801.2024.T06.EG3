@@ -1,6 +1,9 @@
 ''' Class HotelStay (GE2.2) '''
 from datetime import datetime
 import hashlib
+from .storage.reservation_json_store import ReservationJsonStore
+from .storage.stay_json_store import StayJsonStore
+import json
 
 from . import HotelReservation
 from .attributes.attribute_localizer import Localizer
@@ -12,19 +15,22 @@ class HotelStay():
     def __init__(self,
                  idcard:str,
                  localizer:str,
-                 numdays:int,
-                 roomtype:str):
+                 numdays:int = None,
+                 roomtype:str = None):
         """constructor for HotelStay objects"""
         self.__alg = "SHA-256"
-        self.__type = roomtype
         self.__idcard = idcard
         self.__localizer = Localizer(localizer).value
+        reservation = HotelReservation.create_reservation_from_arrival(self.id_card, self.localizer)
+        self.__type = reservation.room_type
+        numdays = reservation.num_days
         justnow = datetime.utcnow()
         self.__arrival = datetime.timestamp(justnow)
         #timestamp is represented in seconds.miliseconds
         #to add the number of days we must express num_days in seconds
         self.__departure = self.__arrival + (numdays * 24 * 60 * 60)
         self.__room_key = hashlib.sha256(self.__signature_string().encode()).hexdigest()
+
 
     def __signature_string(self):
         """Composes the string to be used for generating the key for the room"""
