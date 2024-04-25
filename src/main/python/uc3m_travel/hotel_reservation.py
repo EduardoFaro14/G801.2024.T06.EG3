@@ -5,6 +5,7 @@ from datetime import datetime
 from freezegun import freeze_time
 
 from .attributes.attribute_idcard import IdCard
+from .attributes.attribute_localizer import Localizer
 from .attributes.attribute_creditcard import CreditCard
 from .attributes.attribute_room_type import RoomType
 from .attributes.attribute_arrival_date import ArrivalDate
@@ -52,19 +53,12 @@ class HotelReservation:
         return "HotelReservation:" + json_info.__str__()
 
     @classmethod
-    def create_reservation_from_arrival(cls, my_id_card, my_localizer):
+    def create_reservation_from_arrival(cls, my_localizer):
         # buscar en almacen
         reservation_store = ReservationJsonStore()
-        my_id_card = IdCard(my_id_card).value
         reservation = reservation_store.return_item(key = "_HotelReservation__localizer", value = my_localizer)
         if reservation == None:
             raise HotelManagementException("Error: localizer not found")
-
-        if my_id_card != reservation["_HotelReservation__id_card"]:
-            raise HotelManagementException("Error: Localizer is not correct for this IdCard")
-        # reservation_credit_card, reservation_date_arrival, reservation_date_timestamp, reservation_days, reservation_id_card, reservation_name, reservation_phone, reservation_room_type = self.find_reservation(
-        # my_id_card, my_localizer)
-
         # regenrar clave y ver si coincide
         reservation_date = datetime.fromtimestamp(reservation["_HotelReservation__reservation_date"])
         with freeze_time(reservation_date):

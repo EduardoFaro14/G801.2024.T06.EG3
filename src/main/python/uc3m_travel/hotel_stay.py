@@ -9,6 +9,8 @@ from . import HotelReservation
 from .attributes.attribute_localizer import Localizer
 from .hotel_management_exception import HotelManagementException
 from .attributes.attribute_idcard import IdCard
+from .attributes.attribute_room_type import RoomType
+
 
 
 class HotelStay():
@@ -22,14 +24,20 @@ class HotelStay():
         self.__alg = "SHA-256"
         self.__idcard = IdCard(idcard).value
         self.__localizer = Localizer(localizer).value
-        reservation = HotelReservation.create_reservation_from_arrival(self.id_card, self.localizer)
+        reservation = HotelReservation.create_reservation_from_arrival(self.__localizer)
+        if reservation.id_card != self.__idcard:
+            raise HotelManagementException("Error: Localizer is not correct for this IdCard")
         self.__type = reservation.room_type
-        numdays = reservation.num_days
         justnow = datetime.utcnow()
         self.__arrival = datetime.timestamp(justnow)
+        reservation_format = "%d/%m/%Y"
+        date_obj = datetime.strptime(reservation.arrival, reservation_format)
+        if date_obj.date() != datetime.date(datetime.utcnow()):
+            raise HotelManagementException("Error: today is not reservation date")
+        # genero la room key para ello llamo a Hotel Stay
         #timestamp is represented in seconds.miliseconds
         #to add the number of days we must express num_days in seconds
-        self.__departure = self.__arrival + (numdays * 24 * 60 * 60)
+        self.__departure = self.__arrival + (reservation.num_days * 24 * 60 * 60)
         self.__room_key = hashlib.sha256(self.__signature_string().encode()).hexdigest()
 
 
@@ -77,7 +85,7 @@ class HotelStay():
         """returns the value of the departure date"""
         self.__departure = value
 
-    @classmethod
+    '''@classmethod
     def create_guest_arrival_from_file(self, file_input):
         input_list = self.read_input_file(file_input)
         my_id_card, my_localizer = self.read_input_data_from_file(input_list)
@@ -90,7 +98,7 @@ class HotelStay():
         # genero la room key para ello llamo a Hotel Stay
         my_checkin = HotelStay(idcard=my_id_card, numdays=int(new_reservation.num_days),
                                localizer=my_localizer, roomtype=new_reservation.room_type)
-        return my_checkin
+        return my_checkin'''
 
     @classmethod
     def read_input_data_from_file(self, input_list):

@@ -16,6 +16,7 @@ from .storage.checkout_json_store import CheckOutJsonStore
 from .hotel_departure import HotelDeparture
 from .attributes.attribute_roomkey import RoomKey
 from .hotel_reservation import HotelReservation
+from .parser.arrival_json_parser import ArrivalJsonParser
 
 class HotelManager:
     class __HotelManager:
@@ -72,10 +73,13 @@ class HotelManager:
 
         def guest_arrival(self, file_input: str) -> str:
             """manages the arrival of a guest with a reservation"""
-            checkin_store = StayJsonStore()
-
-            my_checkin = HotelStay.create_guest_arrival_from_file(file_input)
+            arrival_input = ArrivalJsonParser(file_input)
+            my_id_card = arrival_input.json_content["IdCard"]
+            my_localizer = arrival_input.json_content["Localizer"]
+            my_checkin = HotelStay(my_id_card, my_localizer)
+            #my_checkin = HotelStay.create_guest_arrival_from_file(file_input)
             # añado el diccionario a la lista de checkins
+            checkin_store = StayJsonStore()
             checkin_store.add_item(my_checkin)
 
             return my_checkin.room_key
