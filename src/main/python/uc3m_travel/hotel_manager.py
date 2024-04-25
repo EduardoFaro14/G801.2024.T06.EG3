@@ -71,6 +71,9 @@ class HotelManager:
 
         def guest_arrival(self, file_input: str) -> str:
             """manages the arrival of a guest with a reservation"""
+            '''checkin_store = StayJsonStore()
+            reservation_store = ReservationJsonStore()
+            input_list = checkin_store.load_list_from_file(file_input)'''
             try:
                 with open(file_input, "r", encoding="utf-8", newline="") as file:
                     input_list = json.load(file)
@@ -88,6 +91,8 @@ class HotelManager:
 
 
             # buscar en almacen
+            '''x = reservation_store._file_name
+            store_list = checkin_store.load_list_from_file(x)'''
             file_store = JSON_FILES_PATH + "store_reservation.json"
 
             # leo los datos del fichero , si no existe deber dar error porque el almacen de reservaa
