@@ -8,6 +8,7 @@ import json
 from . import HotelReservation
 from .attributes.attribute_localizer import Localizer
 from .hotel_management_exception import HotelManagementException
+from .attributes.attribute_idcard import IdCard
 
 
 class HotelStay():
@@ -19,7 +20,7 @@ class HotelStay():
                  roomtype:str = None):
         """constructor for HotelStay objects"""
         self.__alg = "SHA-256"
-        self.__idcard = idcard
+        self.__idcard = IdCard(idcard).value
         self.__localizer = Localizer(localizer).value
         reservation = HotelReservation.create_reservation_from_arrival(self.id_card, self.localizer)
         self.__type = reservation.room_type
@@ -96,7 +97,7 @@ class HotelStay():
         # comprobar valores del fichero
         try:
             my_localizer = Localizer(input_list["Localizer"]).value
-            my_id_card = IdCard(input_list["IdCard"]).value
+            my_id_card = input_list["IdCard"]
         except KeyError as exception:
             raise HotelManagementException("Error - Invalid Key in JSON") from exception
         return my_id_card, my_localizer

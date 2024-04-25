@@ -73,18 +73,8 @@ class HotelManager:
         def guest_arrival(self, file_input: str) -> str:
             """manages the arrival of a guest with a reservation"""
             checkin_store = StayJsonStore()
-            input_list = checkin_store.load_list_from_file(file_input)
 
-            # comprobar valores del fichero
-            try:
-                my_localizer = Localizer(input_list["Localizer"]).value
-                my_id_card = IdCard(input_list["IdCard"]).value
-            except KeyError as e:
-                raise HotelManagementException("Error - Invalid Key in JSON") from e
-
-            # genero la room key para ello llamo a Hotel Stay
-            my_checkin = HotelStay(idcard=my_id_card, localizer=my_localizer)
-
+            my_checkin = HotelStay.create_guest_arrival_from_file(file_input)
             # añado el diccionario a la lista de checkins
             checkin_store.add_item(my_checkin)
 
