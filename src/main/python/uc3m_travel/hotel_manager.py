@@ -97,6 +97,7 @@ class HotelManager:
             room_key_list = StayJsonStore()
             room_key_list = room_key_list.read_store()
             # comprobar que esa room_key es la que me han dado
+
             found = False
             for item in room_key_list:
                 if room_key == item["_HotelStay__room_key"]:
@@ -104,6 +105,7 @@ class HotelManager:
                     found = True
             if not found:
                 raise HotelManagementException ("Error: room key not found")
+
             my_checkout = HotelDeparture(room_key, departure_date_timestamp)
             checkout_store = CheckOutJsonStore()
             checkout_store.add_item(my_checkout)

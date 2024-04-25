@@ -111,3 +111,8 @@ class HotelStay():
         except json.JSONDecodeError as exception:
             raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from exception
         return input_list
+
+    @classmethod
+    def guest_checkout(self, room_key):
+        stay = HotelStay.get_stay_from_room_key(room_key)
+        return stay.check_out()
