@@ -1,7 +1,7 @@
 "Module hotel_departure"
 from datetime import datetime
 from .hotel_management_exception import HotelManagementException
-
+# pylint: disable=too-few-public-methods
 class HotelDeparture:
     """Class to manage the departure of guests from the hotel"""
     def __init__(self, room_key, departure):

@@ -3,8 +3,12 @@ from datetime import datetime
 import hashlib
 from . import HotelReservation
 from .attributes.attribute_localizer import Localizer
+from .hotel_departure import HotelDeparture
 from .hotel_management_exception import HotelManagementException
 from .attributes.attribute_id_card import IdCard
+from .attributes.attribute_room_key import RoomKey
+from .storage.checkout_json_store import CheckOutJsonStore
+from .storage.stay_json_store import StayJsonStore
 class HotelStay():
     """Class for representing hotel stays"""
     def __init__(self,
@@ -36,6 +40,24 @@ class HotelStay():
         return "{alg:" + self.__alg + ",typ:" + self.__type + ",localizer:" + \
             self.__localizer + ",arrival:" + str(self.__arrival) + \
             ",departure:" + str(self.__departure) + "}"
+    @classmethod
+    def get_stay_from_room_key(cls, room_key):
+        "Function 3, check out"
+        room_key = RoomKey(room_key).value
+        room_key_list = StayJsonStore()
+        room_key_list = room_key_list.read_store()
+        # comprobar que esa room_key es la que me han dado
+        found = False
+        for item in room_key_list:
+            if room_key == item["_HotelStay__room_key"]:
+                departure_date_timestamp = item["_HotelStay__departure"]
+                found = True
+        if not found:
+            raise HotelManagementException("Error: room key not found")
+        my_checkout = HotelDeparture(room_key, departure_date_timestamp)
+        checkout_store = CheckOutJsonStore()
+        checkout_store.add_item(my_checkout)
+        return True
 
     @property
     def id_card(self):
@@ -75,8 +97,3 @@ class HotelStay():
     def departure(self, value):
         """returns the value of the departure date"""
         self.__departure = value
-    @classmethod
-    def guest_checkout(cls, room_key):
-        "Returns check out"
-        stay = HotelStay.get_stay_from_room_key(room_key)
-        return stay.check_out()

@@ -1,20 +1,18 @@
 """Module for the hotel manager"""
-from uc3m_travel.hotel_stay import HotelStay
-from .hotel_management_exception import HotelManagementException
+from .hotel_stay import HotelStay
 from .storage.reservation_json_store import ReservationJsonStore
 from .storage.stay_json_store import StayJsonStore
-from .storage.checkout_json_store import CheckOutJsonStore
-from .hotel_departure import HotelDeparture
-from .attributes.attribute_room_key import RoomKey
 from .hotel_reservation import HotelReservation
 from .parser.arrival_json_parser import ArrivalJsonParser
-
+# pylint: disable=too-few-public-methods
 class HotelManager:
     "Class hotel manager"
+    # pylint: disable=invalid-name
     class __HotelManager:
         """Class with all the methods for managing reservations and stays"""
         def __init__(self):
             pass
+        # pylint: disable=too-many-arguments
         def room_reservation(self,
                              credit_card:str,
                              name_surname:str,
@@ -42,8 +40,6 @@ class HotelManager:
             my_id_card = arrival_input.json_content["IdCard"]
             my_localizer = arrival_input.json_content["Localizer"]
             my_checkin = HotelStay(my_id_card, my_localizer)
-            #my_checkin = HotelStay.create_guest_arrival_from_file(file_input)
-            # añado el diccionario a la lista de checkins
             checkin_store = StayJsonStore()
             checkin_store.add_item(my_checkin)
 
@@ -51,24 +47,8 @@ class HotelManager:
 
         def guest_checkout(self, room_key:str)->bool:
             """manages the checkout of a guest"""
-            #check thawt the roomkey is stored in the checkins file
-            room_key = RoomKey(room_key).value
-            room_key_list = StayJsonStore()
-            room_key_list = room_key_list.read_store()
-            # comprobar que esa room_key es la que me han dado
-
-            found = False
-            for item in room_key_list:
-                if room_key == item["_HotelStay__room_key"]:
-                    departure_date_timestamp = item["_HotelStay__departure"]
-                    found = True
-            if not found:
-                raise HotelManagementException ("Error: room key not found")
-
-            my_checkout = HotelDeparture(room_key, departure_date_timestamp)
-            checkout_store = CheckOutJsonStore()
-            checkout_store.add_item(my_checkout)
-            return True
+            stay = HotelStay.get_stay_from_room_key(room_key)
+            return stay
 
     __instance = None
     def __new__(cls):

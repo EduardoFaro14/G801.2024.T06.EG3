@@ -1,7 +1,7 @@
 "Module attribute"
 import re
 from ..hotel_management_exception import HotelManagementException
-
+# pylint: disable=too-few-public-methods
 class Attribute:
     """Attribute class definition"""
 
