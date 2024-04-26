@@ -1,6 +1,8 @@
+"Module attribute_credit_card"
 from .attribute import Attribute
 from ..hotel_management_exception import HotelManagementException
 class CreditCard(Attribute):
+    "Clase para validar la tarjeta de crédito"
     def __init__(self, credit_card):
         self._validation_pattern = r"^[0-9]{16}"
         self._error_message = "Invalid credit card format"

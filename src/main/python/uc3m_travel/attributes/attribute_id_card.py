@@ -1,6 +1,8 @@
+"Module attribute_id_card"
 from .attribute import Attribute
 from ..hotel_management_exception import HotelManagementException
 class IdCard(Attribute):
+    "Clase para validar el DNI"
     def __init__(self, id_card):
         self._validation_pattern = r"^\d{8}[A-Z]$"
         self._error_message = "Invalid IdCard format"

@@ -1,6 +1,8 @@
+"Module attribute_num_days"
 from .attribute import Attribute
 from ..hotel_management_exception import HotelManagementException
 class NumDays(Attribute):
+    "Clase para validar el número de días"
     def __init__(self, num_days):
         self._validation_pattern = r"^(10|[1-9])$"
         self._error_message = "Invalid numdays format"

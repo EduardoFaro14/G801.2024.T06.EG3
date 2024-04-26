@@ -1,25 +1,15 @@
 ''' Class HotelStay (GE2.2) '''
 from datetime import datetime
 import hashlib
-from .storage.reservation_json_store import ReservationJsonStore
-from .storage.stay_json_store import StayJsonStore
-import json
-
 from . import HotelReservation
 from .attributes.attribute_localizer import Localizer
 from .hotel_management_exception import HotelManagementException
-from .attributes.attribute_idcard import IdCard
-from .attributes.attribute_room_type import RoomType
-
-
-
+from .attributes.attribute_id_card import IdCard
 class HotelStay():
     """Class for representing hotel stays"""
     def __init__(self,
                  idcard:str,
-                 localizer:str,
-                 numdays:int = None,
-                 roomtype:str = None):
+                 localizer:str):
         """constructor for HotelStay objects"""
         self.__alg = "SHA-256"
         self.__idcard = IdCard(idcard).value
@@ -63,6 +53,7 @@ class HotelStay():
 
     @localizer.setter
     def localizer(self, value):
+        "Function localizer"
         self.__localizer = value
 
     @property
@@ -84,44 +75,8 @@ class HotelStay():
     def departure(self, value):
         """returns the value of the departure date"""
         self.__departure = value
-
-    '''@classmethod
-    def create_guest_arrival_from_file(self, file_input):
-        input_list = self.read_input_file(file_input)
-        my_id_card, my_localizer = self.read_input_data_from_file(input_list)
-        new_reservation = HotelReservation.create_reservation_from_arrival(my_id_card, my_localizer)
-        # compruebo si hoy es la fecha de checkin
-        reservation_format = "%d/%m/%Y"
-        date_obj = datetime.strptime(new_reservation.arrival, reservation_format)
-        if date_obj.date() != datetime.date(datetime.utcnow()):
-            raise HotelManagementException("Error: today is not reservation date")
-        # genero la room key para ello llamo a Hotel Stay
-        my_checkin = HotelStay(idcard=my_id_card, numdays=int(new_reservation.num_days),
-                               localizer=my_localizer, roomtype=new_reservation.room_type)
-        return my_checkin'''
-
     @classmethod
-    def read_input_data_from_file(self, input_list):
-        # comprobar valores del fichero
-        try:
-            my_localizer = Localizer(input_list["Localizer"]).value
-            my_id_card = input_list["IdCard"]
-        except KeyError as exception:
-            raise HotelManagementException("Error - Invalid Key in JSON") from exception
-        return my_id_card, my_localizer
-
-    @classmethod
-    def read_input_file(self, file_input):
-        try:
-            with open(file_input, "r", encoding="utf-8", newline="") as file:
-                input_list = json.load(file)
-        except FileNotFoundError as exception:
-            raise HotelManagementException("Error: file input not found") from exception
-        except json.JSONDecodeError as exception:
-            raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from exception
-        return input_list
-
-    @classmethod
-    def guest_checkout(self, room_key):
+    def guest_checkout(cls, room_key):
+        "Returns check out"
         stay = HotelStay.get_stay_from_room_key(room_key)
         return stay.check_out()

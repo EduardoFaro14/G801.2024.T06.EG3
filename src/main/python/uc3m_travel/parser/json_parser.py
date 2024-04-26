@@ -1,6 +1,8 @@
-from ..hotel_management_exception import HotelManagementException
+"Module json_parser"
 import json
+from ..hotel_management_exception import HotelManagementException
 class JsonParser():
+    "Class parser"
     _JSON_KEYS = []
     _ERROR_MESSAGE = "JSON Decode Error - Wrong JSON Format"
     _json_content = None
@@ -11,6 +13,7 @@ class JsonParser():
         self.validate_json_keys()
 
     def validate_json_keys(self):
+        "Function validate json keys"
         for key in self._JSON_KEYS:
             if key not in self._json_content.keys():
                 raise HotelManagementException(self._ERROR_MESSAGE)
@@ -28,4 +31,5 @@ class JsonParser():
 
     @property
     def json_content(self):
+        "Returns json content"
         return self._json_content

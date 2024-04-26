@@ -1,6 +1,6 @@
+"Module attribute"
 import re
 from ..hotel_management_exception import HotelManagementException
-
 
 class Attribute:
     """Attribute class definition"""

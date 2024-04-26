@@ -1,6 +1,7 @@
+"Module attribute_name_surname"
 from .attribute import Attribute
-from ..hotel_management_exception import HotelManagementException
 class NameSurname(Attribute):
+    "Clase para validar el nombre y apellido(s)"
     def __init__(self, name_surname):
         self._validation_pattern = r"^(?=^.{10,50}$)([a-zA-Z]+(\s[a-zA-Z]+)+)$"
         self._error_message = "Invalid name format"

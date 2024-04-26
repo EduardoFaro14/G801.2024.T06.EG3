@@ -1,55 +1,20 @@
 """Module for the hotel manager"""
-import re
-import json
-from datetime import datetime
-from .hotel_management_exception import HotelManagementException
-from .hotel_reservation import HotelReservation
 from uc3m_travel.hotel_stay import HotelStay
-from .hotel_management_config import JSON_FILES_PATH
-from freezegun import freeze_time
-from .attributes.attribute_localizer import Localizer
-from .attributes.attribute_idcard import IdCard
-from .storage.json_store import JsonStore
+from .hotel_management_exception import HotelManagementException
 from .storage.reservation_json_store import ReservationJsonStore
 from .storage.stay_json_store import StayJsonStore
 from .storage.checkout_json_store import CheckOutJsonStore
 from .hotel_departure import HotelDeparture
-from .attributes.attribute_roomkey import RoomKey
+from .attributes.attribute_room_key import RoomKey
 from .hotel_reservation import HotelReservation
 from .parser.arrival_json_parser import ArrivalJsonParser
 
 class HotelManager:
+    "Class hotel manager"
     class __HotelManager:
         """Class with all the methods for managing reservations and stays"""
         def __init__(self):
             pass
-        def read_data_from_json(self, fi):
-            """reads the content of a json file with two fields: CreditCard and phoneNumber"""
-            try:
-                with open(fi, encoding='utf-8') as file:
-                    json_data = json.load(file)
-            except FileNotFoundError as exception:
-                raise HotelManagementException("Wrong file or file path") from exception
-            except json.JSONDecodeError as exception:
-                raise HotelManagementException("JSON Decode Error - Wrong JSON Format") from exception
-            try:
-                credit_card = json_data["CreditCard"]
-                phone_number = json_data["phoneNumber"]
-                data = HotelReservation(id_card="12345678Z",
-                                       credit_card_number=credit_card,
-                                       name_surname="John Doe",
-                                       phone_number=phone_number,
-                                       room_type="single",
-                                       num_days=3,
-                                       arrival="20/01/2024")
-            except KeyError as exception:
-                raise HotelManagementException("JSON Decode Error - Invalid JSON Key") from exception
-            #if not self.validatecreditcard(c):
-                #raise HotelManagementException("Invalid credit card number")
-            # Close the file
-            return data
-
-        # pylint: disable=too-many-arguments
         def room_reservation(self,
                              credit_card:str,
                              name_surname:str,

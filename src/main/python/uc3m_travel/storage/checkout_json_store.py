@@ -1,7 +1,9 @@
+"Module checkout_json_store"
 from ..hotel_management_config import JSON_FILES_PATH
 from .json_store import JsonStore
 
 class CheckOutJsonStore(JsonStore):
+    "Class read, write, add, function 3"
     class __CheckOutJsonStore(JsonStore):
         _file_name = JSON_FILES_PATH + "store_check_out.json"
         _error_message_store_not_found = "Error: file input not found"

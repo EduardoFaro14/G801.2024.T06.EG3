@@ -4,14 +4,12 @@ from datetime import datetime
 
 from freezegun import freeze_time
 
-from .attributes.attribute_idcard import IdCard
-from .attributes.attribute_localizer import Localizer
-from .attributes.attribute_creditcard import CreditCard
+from .attributes.attribute_id_card import IdCard
+from .attributes.attribute_credit_card import CreditCard
 from .attributes.attribute_room_type import RoomType
 from .attributes.attribute_arrival_date import ArrivalDate
-from .attributes.attribute_phonenumber import PhoneNumber
-from .attributes.attribute_numdays import NumDays
-from .attributes.attribute_roomkey import RoomKey
+from .attributes.attribute_phone_number import PhoneNumber
+from .attributes.attribute_num_days import NumDays
 from .attributes.attribute_name_surname import NameSurname
 from .hotel_management_exception import HotelManagementException
 from .storage.reservation_json_store import ReservationJsonStore
@@ -54,13 +52,16 @@ class HotelReservation:
 
     @classmethod
     def create_reservation_from_arrival(cls, my_localizer):
+        "Función para crear la reserva"
         # buscar en almacen
         reservation_store = ReservationJsonStore()
-        reservation = reservation_store.return_item(key = "_HotelReservation__localizer", value = my_localizer)
-        if reservation == None:
+        reservation = (reservation_store.return_item
+                       (key = "_HotelReservation__localizer", value = my_localizer))
+        if reservation is None:
             raise HotelManagementException("Error: localizer not found")
         # regenrar clave y ver si coincide
-        reservation_date = datetime.fromtimestamp(reservation["_HotelReservation__reservation_date"])
+        reservation_date = (datetime.fromtimestamp
+                            (reservation["_HotelReservation__reservation_date"]))
         with freeze_time(reservation_date):
             new_reservation = cls(
                 credit_card_number=reservation["_HotelReservation__credit_card_number"],
@@ -97,12 +98,15 @@ class HotelReservation:
 
     @property
     def arrival(self):
+        "Returns arrival "
         return self.__arrival
 
     @property
     def num_days(self):
+        "Returns num_days"
         return self.__num_days
 
     @property
     def room_type(self):
+        "Returns room_type"
         return self.__room_type

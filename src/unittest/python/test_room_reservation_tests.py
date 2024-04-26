@@ -39,7 +39,7 @@ class TestHotelReservation(TestCase):
     @freeze_time("2024/03/22 13:00:00")
     def test_duplicated_reservation_tests(self):
         """duplicated reservation test"""
-        mngr = HotelManager()
+        hotel_manager = HotelManager()
         credit_card_number = "5105105105105100"
         name = "JOSE LOPEZ"
         dni = "12345678Z"
@@ -47,9 +47,8 @@ class TestHotelReservation(TestCase):
         arrival = "01/07/2024"
         days = 1
         phone_number = "+341234567"
-
         #first reservation
-        mngr.room_reservation(credit_card=credit_card_number,
+        hotel_manager.room_reservation(credit_card=credit_card_number,
                                       name_surname=name,
                                       id_card=dni,
                                       phone_number=phone_number,
@@ -66,7 +65,7 @@ class TestHotelReservation(TestCase):
             hash_original = ""
         #second reservation with same data
         with self.assertRaises(HotelManagementException) as c_m:
-            mngr.room_reservation(credit_card=credit_card_number,
+            hotel_manager.room_reservation(credit_card=credit_card_number,
                                   name_surname=name,
                                   id_card=dni,
                                   phone_number=phone_number,
