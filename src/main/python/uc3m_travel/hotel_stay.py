@@ -1,14 +1,14 @@
 ''' Class HotelStay (GE2.2) '''
 from datetime import datetime
 import hashlib
-from . import HotelReservation
-from .attributes.attribute_localizer import Localizer
-from .hotel_departure import HotelDeparture
-from .hotel_management_exception import HotelManagementException
-from .attributes.attribute_id_card import IdCard
-from .attributes.attribute_room_key import RoomKey
-from .storage.checkout_json_store import CheckOutJsonStore
-from .storage.stay_json_store import StayJsonStore
+from uc3m_travel.hotel_reservation import HotelReservation
+from uc3m_travel.attributes.attribute_localizer import Localizer
+from uc3m_travel.hotel_departure import HotelDeparture
+from uc3m_travel.hotel_management_exception import HotelManagementException
+from uc3m_travel.attributes.attribute_id_card import IdCard
+from uc3m_travel.attributes.attribute_room_key import RoomKey
+from uc3m_travel.storage.checkout_json_store import CheckOutJsonStore
+from uc3m_travel.storage.stay_json_store import StayJsonStore
 class HotelStay():
     """Class for representing hotel stays"""
     def __init__(self,
